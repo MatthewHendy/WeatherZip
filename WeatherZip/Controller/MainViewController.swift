@@ -40,15 +40,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var table: UITableView!
     let cellReuseID = "cellReuseID"
-    let zipCodeArray = ["78701", "78702", "78703", "78704", "78705"]
+    var zipCodeArray = ["78701", "78702", "78703", "78704", "78705"]
     let weatherService = WeatherService()
     var currentWeatherConditions: CurrentWeatherConditions?
     
+    // MARK: Lifecycle Delegates
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-    
+
+    // MARK: IBOutlet Actions
     @IBAction func addZipCodeButtonPressed(_ sender: Any) {
         showInputDialog(title: "Add zip code",
                         subtitle: "Please enter the new number below.",
@@ -57,10 +59,39 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         inputPlaceholder: "zip code",
                         inputKeyboardType: .numberPad)
         { (input:String?) in
-            print("The new number is \(input ?? "")")
+            guard let zip = input, !zip.isEmpty else {
+                print("Must enter a zip code")
+                return
+            }
+            
+            if !self.checkIfNumberIsZipCodeFormat(num: zip) {
+                print("Must enter a valid zip code")
+                return
+            }
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            self.weatherService.performCurrentWeatherRequestWithZip(zip) { (results, errorMessage) in
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                if !errorMessage.isEmpty {
+                    print("Search error: " + errorMessage)
+                    return
+                }
+                
+                self.currentWeatherConditions = results
+                self.zipCodeArray.append(zip)
+                self.table.reloadData()
+                self.performSegue(withIdentifier: "moveToDetailSegue", sender: self)
+            }
         }
     }
+    
+    // MARK: Helpers
+    private func checkIfNumberIsZipCodeFormat(num: String) -> Bool {
+         return num.range(of: #"^\d{5}(-\d{4})?$"#,
+                         options: .regularExpression) != nil // true
+    }
 
+    // MARK: TableView delegates
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return zipCodeArray.count
     }
@@ -89,7 +120,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    
+    // MARK: StoryBoard
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "moveToDetailSegue" {
             if let vc = segue.destination as? DetailViewController {
