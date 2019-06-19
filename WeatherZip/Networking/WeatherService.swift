@@ -23,7 +23,7 @@ class WeatherService: NSObject {
     
     public func performCurrentWeatherRequestWithZip(_ zip: String, completionBlock: @escaping QueryResult) {
         dataTask?.cancel()//cancel task first to make sure it isnt doing something else
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?zip=\(zip),us&APPID=\(APIKey)"
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?zip=\(zip),us&units=imperial&APPID=\(APIKey)"
         let url = URL(string: urlString)!
         
         dataTask = sharedSession.dataTask(with: url) { (data, response, error) in

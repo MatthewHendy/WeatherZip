@@ -24,9 +24,9 @@ class DetailViewController: UIViewController {
     
     private func configureLabels() {
         if let currentWeatherConditions = currentWeatherConditions {
-            descriptionLabel.text = currentWeatherConditions.description
-            tempLabel.text = currentWeatherConditions.temp
-            humidityLabel.text = currentWeatherConditions.humidity
+            descriptionLabel.text = "Description: \(currentWeatherConditions.description)"
+            tempLabel.text = "Temperature: \(currentWeatherConditions.temp)"
+            humidityLabel.text = "Humidity: \(currentWeatherConditions.humidity)"
         } else {
             print("Current Weather Conditions Not Provided")
         }
