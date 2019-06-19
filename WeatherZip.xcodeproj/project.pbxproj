@@ -16,6 +16,7 @@
 		FA6AA76522B9474000424D23 /* WeatherZipUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AA76422B9474000424D23 /* WeatherZipUITests.swift */; };
 		FA6AA77322B9715600424D23 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AA77222B9715600424D23 /* WeatherService.swift */; };
 		FA6AA77A22BA78E100424D23 /* CurrentWeatherConditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AA77922BA78E100424D23 /* CurrentWeatherConditions.swift */; };
+		FA9D64F222BAAE9300A8BB4D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D64F122BAAE9300A8BB4D /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		FA6AA76622B9474000424D23 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA6AA77222B9715600424D23 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		FA6AA77922BA78E100424D23 /* CurrentWeatherConditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherConditions.swift; sourceTree = "<group>"; };
+		FA9D64F122BAAE9300A8BB4D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				FA6AA74622B9473B00424D23 /* MainViewController.swift */,
+				FA9D64F122BAAE9300A8BB4D /* DetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			files = (
 				FA6AA77322B9715600424D23 /* WeatherService.swift in Sources */,
 				FA6AA74722B9473B00424D23 /* MainViewController.swift in Sources */,
+				FA9D64F222BAAE9300A8BB4D /* DetailViewController.swift in Sources */,
 				FA6AA77A22BA78E100424D23 /* CurrentWeatherConditions.swift in Sources */,
 				FA6AA74522B9473B00424D23 /* AppDelegate.swift in Sources */,
 			);

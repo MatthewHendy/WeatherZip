@@ -14,11 +14,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     let cellReuseID = "cellReuseID"
     let zipCodeArray = ["78701", "78702", "78703", "78704", "78705"]
     let weatherService = WeatherService()
+    var currentWeatherConditions: CurrentWeatherConditions?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         // Do any additional setup after loading the view.
     }
     
@@ -48,18 +47,20 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print("Search error: " + errorMessage)
                 return
             }
-            
-            print(results)
-            
-            
-            
+
+            self.currentWeatherConditions = results
+            self.performSegue(withIdentifier: "moveToDetailSegue", sender: self)
         }
-        
-        
     }
     
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "moveToDetailSegue" {
+            if let vc = segue.destination as? DetailViewController {
+                vc.currentWeatherConditions = currentWeatherConditions
+            }
+        }
+    }
     
 
     

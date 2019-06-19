@@ -54,9 +54,9 @@ class WeatherService: NSObject {
     
     private func packageCurrentWeatherConditions(_ json: JSONDictionary?) -> CurrentWeatherConditions {
         //unpackage necessary pieces from json
-        var temp: Double
+        var temp: String
         var description: String
-        var humidity : Double
+        var humidity : String
         
         //description
         if let weatherArray = json?["weather"] as? [JSONDictionary],
@@ -64,23 +64,23 @@ class WeatherService: NSObject {
             let des = weather["description"] {
                 description = des as! String
         } else {
-            description = ""
+            description = "No Description Provided"
         }
         
         //temp
         if let mainDictionary1 = json?["main"] as? JSONDictionary,
             let tempHolder = mainDictionary1["temp"] {
-                temp = tempHolder as! Double
+                temp = String(tempHolder as! Double)
         } else {
-            temp = -999
+            temp = "No Temperature Provided"
         }
         
         //humidity
         if let mainDictionary2 = json?["main"] as? JSONDictionary,
             let hum = mainDictionary2["humidity"] {
-                humidity = hum as! Double
+                humidity = String(hum as! Double)
         } else {
-            humidity = -999
+            humidity = "No Humidity Provided"
         }
         
         let currentWeatherConditions = CurrentWeatherConditions.init(temp: temp, description: description, humidity: humidity)
