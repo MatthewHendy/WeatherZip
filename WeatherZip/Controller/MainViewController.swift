@@ -13,12 +13,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var table: UITableView!
     let cellReuseID = "cellReuseID"
     let zipCodeArray = ["78701", "78702", "78703", "78704", "78705"]
+    let weatherService = WeatherService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func addZipCodeButtonPressed(_ sender: Any) {
+        
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,7 +41,28 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let zip = zipCodeArray[indexPath.row]
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        weatherService.performCurrentWeatherRequestWithZip(zip) { (results, errorMessage) in
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            if !errorMessage.isEmpty {
+                print("Search error: " + errorMessage)
+                return
+            }
+            
+            print(results)
+            
+            
+            
+        }
+        
+        
     }
+    
+    
+    
+    
 
+    
+    
 }
 
