@@ -8,6 +8,34 @@
 
 import UIKit
 
+extension UIViewController {
+    func showInputDialog(title:String? = nil,
+                         subtitle:String? = nil,
+                         actionTitle:String? = "Add",
+                         cancelTitle:String? = "Cancel",
+                         inputPlaceholder:String? = nil,
+                         inputKeyboardType:UIKeyboardType = UIKeyboardType.default,
+                         cancelHandler: ((UIAlertAction) -> Swift.Void)? = nil,
+                         actionHandler: ((_ text: String?) -> Void)? = nil) {
+        
+        let alert = UIAlertController(title: title, message: subtitle, preferredStyle: .alert)
+        alert.addTextField { (textField:UITextField) in
+            textField.placeholder = inputPlaceholder
+            textField.keyboardType = inputKeyboardType
+        }
+        alert.addAction(UIAlertAction(title: actionTitle, style: .destructive, handler: { (action:UIAlertAction) in
+            guard let textField =  alert.textFields?.first else {
+                actionHandler?(nil)
+                return
+            }
+            actionHandler?(textField.text)
+        }))
+        alert.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: cancelHandler))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+}
+
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var table: UITableView!
@@ -22,7 +50,15 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func addZipCodeButtonPressed(_ sender: Any) {
-        
+        showInputDialog(title: "Add zip code",
+                        subtitle: "Please enter the new number below.",
+                        actionTitle: "Add",
+                        cancelTitle: "Cancel",
+                        inputPlaceholder: "zip code",
+                        inputKeyboardType: .numberPad)
+        { (input:String?) in
+            print("The new number is \(input ?? "")")
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -63,6 +99,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
 
+    
+    
     
     
 }
