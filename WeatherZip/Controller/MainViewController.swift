@@ -152,9 +152,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        zipCodeArray.remove(at:indexPath.row)
-        defaults.set(zipCodeArray, forKey: savedZipCodeArrayUserDefaultsKey)
-        tableView.reloadData()
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            zipCodeArray.remove(at:indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)//UITableViewRowAnimationFade
+            defaults.set(zipCodeArray, forKey: savedZipCodeArrayUserDefaultsKey)
+        }
     }
     
     // MARK: StoryBoard
