@@ -87,12 +87,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
             guard let zip = input, !zip.isEmpty else {
-                print("Must enter a zip code")
+                weakSelf.showAlertControllerWithMessage("Must enter a zip code")
                 return
             }
             
             if !weakSelf.checkIfNumberIsZipCodeFormat(num: zip) {
-                print("Must enter a valid zip code")
+                weakSelf.showAlertControllerWithMessage("Must enter a valid zip code")
+                return
+            }
+            
+            if weakSelf.zipCodeArray.contains(zip) {
+                weakSelf.showAlertControllerWithMessage("That zip code is already present")
                 return
             }
             
