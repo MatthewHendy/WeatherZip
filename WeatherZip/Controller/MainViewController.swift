@@ -66,6 +66,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        table.reloadData()
+    }
 
     // MARK: IBOutlet Actions
     @IBAction func addZipCodeButtonPressed(_ sender: Any) {
@@ -102,7 +107,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 weakSelf.currentWeatherConditions = results
                 weakSelf.zipCodeArray.append(zip)
                 weakSelf.defaults.set(weakSelf.zipCodeArray, forKey: weakSelf.savedZipCodeArrayUserDefaultsKey)
-                weakSelf.table.reloadData()
                 weakSelf.performSegue(withIdentifier: "moveToDetailSegue", sender: weakSelf)
             }
         }
