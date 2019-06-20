@@ -9,11 +9,13 @@
 import Foundation
 
 struct CurrentWeatherConditions {
+    let zip: String
     let temp : String
     let description : String
     let humidity : String
     
-    init(temp: String, description: String, humidity: String) {
+    init(zip: String, temp: String, description: String, humidity: String) {
+        self.zip = zip
         self.temp = temp
         self.description = description
         self.humidity = humidity

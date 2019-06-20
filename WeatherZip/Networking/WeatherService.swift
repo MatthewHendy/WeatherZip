@@ -22,6 +22,7 @@ class WeatherService: NSObject {
     var errorMessage: String = ""
     
     public func performCurrentWeatherRequestWithZip(_ zip: String, completionBlock: @escaping QueryResult) {
+        errorMessage = "" //reset error message
         dataTask?.cancel()//cancel task first to make sure it isnt doing something else
         let urlString = "https://api.openweathermap.org/data/2.5/weather?zip=\(zip),us&units=imperial&APPID=\(APIKey)"
         let url = URL(string: urlString)!
@@ -41,10 +42,12 @@ class WeatherService: NSObject {
                 var json: JSONDictionary?
                 do {
                     json = try JSONSerialization.jsonObject(with: data, options: []) as? JSONDictionary
-                    currentWeatherConditions = weakSelf.packageCurrentWeatherConditions(json)
+                    currentWeatherConditions = weakSelf.packageCurrentWeatherConditions(json, zip: zip)
                 } catch let parseError as NSError {
                     weakSelf.errorMessage += "JSONSerialization error: \(parseError.localizedDescription)"
                 }
+            } else if let response = response as? HTTPURLResponse {
+                weakSelf.errorMessage += "Server Response error: \(response.statusCode)"
             }
             
             DispatchQueue.main.async {
@@ -56,7 +59,7 @@ class WeatherService: NSObject {
     }
     
     
-    private func packageCurrentWeatherConditions(_ json: JSONDictionary?) -> CurrentWeatherConditions {
+    private func packageCurrentWeatherConditions(_ json: JSONDictionary?, zip: String) -> CurrentWeatherConditions {
         //unpackage necessary pieces from json
         var temp: String
         var description: String
@@ -87,7 +90,7 @@ class WeatherService: NSObject {
             humidity = "No Humidity Provided"
         }
         
-        let currentWeatherConditions = CurrentWeatherConditions.init(temp: temp, description: description, humidity: humidity)
+        let currentWeatherConditions = CurrentWeatherConditions.init(zip: zip, temp: temp, description: description, humidity: humidity)
         
         return currentWeatherConditions
     }

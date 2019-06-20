@@ -34,6 +34,12 @@ extension UIViewController {
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func showAlertControllerWithMessage(_ title: String) {
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -89,7 +95,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             weakSelf.weatherService.performCurrentWeatherRequestWithZip(zip) { (results, errorMessage) in
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 if !errorMessage.isEmpty {
-                    print("Search error: " + errorMessage)
+                    weakSelf.showAlertControllerWithMessage("Search error: " + errorMessage)
                     return
                 }
                 
@@ -132,7 +138,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             if !errorMessage.isEmpty {
-                print("Search error: " + errorMessage)
+                weakSelf.showAlertControllerWithMessage("Search error: " + errorMessage)
                 return
             }
 
@@ -151,6 +157,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
 
+    
     
     
     

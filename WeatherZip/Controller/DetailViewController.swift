@@ -15,26 +15,21 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var humidityLabel: UILabel!
     
     var currentWeatherConditions: CurrentWeatherConditions?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationItem.title = "Weather Details"
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        configureLabels()
+        configureLabelsAndTitle()
     }
     
-    private func configureLabels() {
+    private func configureLabelsAndTitle() {
         if let currentWeatherConditions = currentWeatherConditions {
+            navigationItem.title = "Weather Details for \(currentWeatherConditions.zip)"
             descriptionLabel.text = "Description: \(currentWeatherConditions.description)"
             tempLabel.text = "Temperature: \(currentWeatherConditions.temp)"
             humidityLabel.text = "Humidity: \(currentWeatherConditions.humidity)"
         } else {
-            print("Current Weather Conditions Not Provided")
+            showAlertControllerWithMessage("Current Weather Conditions Not Provided")
         }
     }
     
