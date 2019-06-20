@@ -26,25 +26,29 @@ class WeatherService: NSObject {
         let urlString = "https://api.openweathermap.org/data/2.5/weather?zip=\(zip),us&units=imperial&APPID=\(APIKey)"
         let url = URL(string: urlString)!
         
-        dataTask = sharedSession.dataTask(with: url) { (data, response, error) in
-            defer {self.dataTask = nil}
+        dataTask = sharedSession.dataTask(with: url) { [weak self] (data, response, error) in
+            defer {self?.dataTask = nil}
+            guard let weakSelf = self else {
+                print("Self is nil, cannot continue")
+                return
+            }
             var currentWeatherConditions:CurrentWeatherConditions? = nil
 
             if let error = error {
-                self.errorMessage += error.localizedDescription
+                weakSelf.errorMessage += error.localizedDescription
             } else if let data = data, let response = response as? HTTPURLResponse,
                 response.statusCode == 200 {
                 var json: JSONDictionary?
                 do {
                     json = try JSONSerialization.jsonObject(with: data, options: []) as? JSONDictionary
-                    currentWeatherConditions = self.packageCurrentWeatherConditions(json)
+                    currentWeatherConditions = weakSelf.packageCurrentWeatherConditions(json)
                 } catch let parseError as NSError {
-                    self.errorMessage += "JSONSerialization error: \(parseError.localizedDescription)"
+                    weakSelf.errorMessage += "JSONSerialization error: \(parseError.localizedDescription)"
                 }
             }
             
             DispatchQueue.main.async {
-                completionBlock(currentWeatherConditions, self.errorMessage)
+                completionBlock(currentWeatherConditions, weakSelf.errorMessage)
             }
         }
         

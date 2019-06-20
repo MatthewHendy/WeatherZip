@@ -32,6 +32,7 @@ class WeatherZipTests: XCTestCase {
         super.tearDown()
         
         sutURLSession = nil
+        sutDetailViewController = nil
     }
 
     func testExample() {
@@ -88,11 +89,12 @@ class WeatherZipTests: XCTestCase {
         wait(for: [promise], timeout:99)
     }
     
-    func testThatDetailViewControllersLabelsAreSetCorrectlyAfterValidServiceCall {
-        //will use mock data to
-        let description = "description"
-        let temp = "100"
-        let humidity = ""
+    func testThatDetailViewControllersLabelsAreSetCorrectly() {        
+        //given
+        
+        //when
+        
+        //then
     }
 
     func testPerformanceExample() {

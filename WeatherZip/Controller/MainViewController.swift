@@ -58,29 +58,34 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         cancelTitle: "Cancel",
                         inputPlaceholder: "zip code",
                         inputKeyboardType: .numberPad)
-        { (input:String?) in
+        { [weak self] (input:String?) in
+            guard let weakSelf = self else {
+                print("Self is nil, cannot continue")
+                return
+            }
+            
             guard let zip = input, !zip.isEmpty else {
                 print("Must enter a zip code")
                 return
             }
             
-            if !self.checkIfNumberIsZipCodeFormat(num: zip) {
+            if !weakSelf.checkIfNumberIsZipCodeFormat(num: zip) {
                 print("Must enter a valid zip code")
                 return
             }
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            self.weatherService.performCurrentWeatherRequestWithZip(zip) { (results, errorMessage) in
+            weakSelf.weatherService.performCurrentWeatherRequestWithZip(zip) { (results, errorMessage) in
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 if !errorMessage.isEmpty {
                     print("Search error: " + errorMessage)
                     return
                 }
                 
-                self.currentWeatherConditions = results
-                self.zipCodeArray.append(zip)
-                self.table.reloadData()
-                self.performSegue(withIdentifier: "moveToDetailSegue", sender: self)
+                weakSelf.currentWeatherConditions = results
+                weakSelf.zipCodeArray.append(zip)
+                weakSelf.table.reloadData()
+                weakSelf.performSegue(withIdentifier: "moveToDetailSegue", sender: weakSelf)
             }
         }
     }
@@ -108,15 +113,19 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         let zip = zipCodeArray[indexPath.row]
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        weatherService.performCurrentWeatherRequestWithZip(zip) { (results, errorMessage) in
+        weatherService.performCurrentWeatherRequestWithZip(zip) { [weak self] (results, errorMessage) in
+            guard let weakSelf = self else {
+                print("Self is nil, cannot continue")
+                return
+            }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             if !errorMessage.isEmpty {
                 print("Search error: " + errorMessage)
                 return
             }
 
-            self.currentWeatherConditions = results
-            self.performSegue(withIdentifier: "moveToDetailSegue", sender: self)
+            weakSelf.currentWeatherConditions = results
+            weakSelf.performSegue(withIdentifier: "moveToDetailSegue", sender: weakSelf)
         }
     }
     
