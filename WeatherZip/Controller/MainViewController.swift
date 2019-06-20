@@ -39,14 +39,25 @@ extension UIViewController {
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var table: UITableView!
+    
     let cellReuseID = "cellReuseID"
-    var zipCodeArray = ["78701", "78702", "78703", "78704", "78705"]
+    
+    let defaults = UserDefaults.standard
+    var zipCodeArray: [String] = [String]()
+    let savedZipCodeArrayUserDefaultsKey = "SavedZipCodeArray"
+    
     let weatherService = WeatherService()
     var currentWeatherConditions: CurrentWeatherConditions?
+
     
     // MARK: Lifecycle Delegates
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Zip Codes"
+        
+        let defaultZipCodeArray = ["78701", "78702", "78703", "78704", "78705"]
+        zipCodeArray = defaults.object(forKey:savedZipCodeArrayUserDefaultsKey) as? [String] ?? defaultZipCodeArray
+
         // Do any additional setup after loading the view.
     }
 
@@ -84,6 +95,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 weakSelf.currentWeatherConditions = results
                 weakSelf.zipCodeArray.append(zip)
+                weakSelf.defaults.set(weakSelf.zipCodeArray, forKey: weakSelf.savedZipCodeArrayUserDefaultsKey)
                 weakSelf.table.reloadData()
                 weakSelf.performSegue(withIdentifier: "moveToDetailSegue", sender: weakSelf)
             }

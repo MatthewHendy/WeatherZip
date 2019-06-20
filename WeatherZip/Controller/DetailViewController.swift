@@ -15,6 +15,12 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var humidityLabel: UILabel!
     
     var currentWeatherConditions: CurrentWeatherConditions?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationItem.title = "Weather Details"
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
