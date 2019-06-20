@@ -147,6 +147,16 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        zipCodeArray.remove(at:indexPath.row)
+        defaults.set(zipCodeArray, forKey: savedZipCodeArrayUserDefaultsKey)
+        tableView.reloadData()
+    }
+    
     // MARK: StoryBoard
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "moveToDetailSegue" {
