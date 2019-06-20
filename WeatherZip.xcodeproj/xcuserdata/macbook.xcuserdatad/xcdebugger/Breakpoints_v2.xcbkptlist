@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeatherZipTests/WeatherZipTests.swift"
-            timestampString = "582731427.819621"
+            timestampString = "582732827.9069771"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
             landmarkName = "setUp()"
             landmarkType = "7">
          </BreakpointContent>

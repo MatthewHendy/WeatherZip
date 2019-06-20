@@ -118,7 +118,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // MARK: Helpers
-    private func checkIfNumberIsZipCodeFormat(num: String) -> Bool {
+    func checkIfNumberIsZipCodeFormat(num: String) -> Bool {
          return num.range(of: #"^\d{5}(-\d{4})?$"#,
                          options: .regularExpression) != nil // true
     }

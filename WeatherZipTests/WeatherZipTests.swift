@@ -15,6 +15,7 @@ class WeatherZipTests: XCTestCase {
 
     
     var sutURLSession: URLSession!
+    var sutMainViewController: MainViewController!
     var sutDetailViewController: DetailViewController!
 
     override func setUp() {
@@ -22,6 +23,8 @@ class WeatherZipTests: XCTestCase {
         super.setUp()
         
         sutURLSession = URLSession.shared
+        sutMainViewController = UIStoryboard(name: "Main", bundle: nil)
+            .instantiateViewController(withIdentifier: "MainViewController") as? MainViewController
         sutDetailViewController = UIStoryboard(name: "Main", bundle: nil)
             .instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController
 
@@ -32,6 +35,7 @@ class WeatherZipTests: XCTestCase {
         super.tearDown()
         
         sutURLSession = nil
+        sutMainViewController = nil
         sutDetailViewController = nil
     }
 
@@ -89,7 +93,35 @@ class WeatherZipTests: XCTestCase {
         wait(for: [promise], timeout:99)
     }
     
+    func testThatZipCodeIsValid() {
+        //given
+        let validZip = "78701"
+        let validZipLonger = "78701-1234"
+        let invalidZip5Letters = "asbcf"
+        let invalidZip4numbers = "7870"
+        let invalidZipAlmost = "78701-123"
+        let invalidZipEmpty = ""
+        
+        //when
+        let validZipResult = sutMainViewController.checkIfNumberIsZipCodeFormat(num: validZip)
+        let validZipLongerResult = sutMainViewController.checkIfNumberIsZipCodeFormat(num: validZipLonger)
+        let invalidZip5LettersResult = sutMainViewController.checkIfNumberIsZipCodeFormat(num: invalidZip5Letters)
+        let invalidZip4numbersResult = sutMainViewController.checkIfNumberIsZipCodeFormat(num: invalidZip4numbers)
+        let invalidZipAlmostResult = sutMainViewController.checkIfNumberIsZipCodeFormat(num: invalidZipAlmost)
+        let invalidZipEmptyResult = sutMainViewController.checkIfNumberIsZipCodeFormat(num: invalidZipEmpty)
+        
+        //then
+        XCTAssertTrue(validZipResult)
+        XCTAssertTrue(validZipLongerResult)
+        XCTAssertFalse(invalidZip5LettersResult)
+        XCTAssertFalse(invalidZip4numbersResult)
+        XCTAssertFalse(invalidZipAlmostResult)
+        XCTAssertFalse(invalidZipEmptyResult)
+    }
+    
     func testThatDetailViewControllersLabelsAreSetCorrectly() {        
+        //I want to create some mock data from server and pass that into my code to see if DetailVC's Labels are set correctly
+        
         //given
         
         //when
