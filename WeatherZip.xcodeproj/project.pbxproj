@@ -17,6 +17,7 @@
 		FA6AA77322B9715600424D23 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AA77222B9715600424D23 /* WeatherService.swift */; };
 		FA6AA77A22BA78E100424D23 /* CurrentWeatherConditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6AA77922BA78E100424D23 /* CurrentWeatherConditions.swift */; };
 		FA9D64F222BAAE9300A8BB4D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D64F122BAAE9300A8BB4D /* DetailViewController.swift */; };
+		FA9D64F422BD7AA700A8BB4D /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D64F322BD7AA700A8BB4D /* ViewControllerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		FA6AA77222B9715600424D23 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		FA6AA77922BA78E100424D23 /* CurrentWeatherConditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherConditions.swift; sourceTree = "<group>"; };
 		FA9D64F122BAAE9300A8BB4D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		FA9D64F322BD7AA700A8BB4D /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				FA6AA77522BA783600424D23 /* Controller */,
 				FA6AA77722BA788900424D23 /* Networking */,
 				FA6AA77622BA787300424D23 /* Storyboards */,
+				FA9D64F322BD7AA700A8BB4D /* ViewControllerExtension.swift */,
 			);
 			path = WeatherZip;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 			files = (
 				FA6AA77322B9715600424D23 /* WeatherService.swift in Sources */,
 				FA6AA74722B9473B00424D23 /* MainViewController.swift in Sources */,
+				FA9D64F422BD7AA700A8BB4D /* ViewControllerExtension.swift in Sources */,
 				FA9D64F222BAAE9300A8BB4D /* DetailViewController.swift in Sources */,
 				FA6AA77A22BA78E100424D23 /* CurrentWeatherConditions.swift in Sources */,
 				FA6AA74522B9473B00424D23 /* AppDelegate.swift in Sources */,
